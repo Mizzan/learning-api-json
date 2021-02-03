@@ -1,20 +1,15 @@
-const userData = {
-  id: 321,
-  name: "John Doe",
-  hobby: {
-    title: "Playing Chess",
-  },
-  favoriteFood: "Noodles",
-  occupation: "Programmer",
-  friendsList: ["Rick Doe", "Marta Doe", "Shawn Doe"],
-};
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then((response) => response.json())
+  .then((json) => displyUser(json));
 
-// turning objects / data into json
+function displyUser(users) {
+  const userNames = users.map((user) => user.username);
+  const ul = document.getElementById("display-user");
 
-const turningJSON = JSON.stringify(userData);
-console.log(turningJSON);
-
-// turning JSON to objects
-
-const turningObjects = JSON.parse(turningJSON);
-console.log(turningObjects);
+  for (let i = 0; i < userNames.length; i++) {
+    const userName = userNames[i];
+    const li = document.createElement("li");
+    li.innerText = userName;
+    ul.appendChild(li);
+  }
+}
