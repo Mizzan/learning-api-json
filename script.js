@@ -1,15 +1,19 @@
-fetch("https://jsonplaceholder.typicode.com/users")
-  .then((response) => response.json())
-  .then((json) => displyUser(json));
+document.getElementById("submit").addEventListener("click", function () {
+  const title = document.getElementById("getTitle").value;
+  const content = document.getElementById("getContent").value;
 
-function displyUser(users) {
-  const userNames = users.map((user) => user.username);
-  const ul = document.getElementById("display-user");
+  const post = { title: title, body: content };
+  postToServer(post);
+});
 
-  for (let i = 0; i < userNames.length; i++) {
-    const userName = userNames[i];
-    const li = document.createElement("li");
-    li.innerText = userName;
-    ul.appendChild(li);
-  }
+function postToServer(post) {
+  fetch("https://jsonplaceholder.typicode.com/users", {
+    method: "POST",
+    body: JSON.stringify(post),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 }
